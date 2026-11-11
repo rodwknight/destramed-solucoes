@@ -1,0 +1,54 @@
+<app-header title="Nova unidade" color="secondary"></app-header>
+
+
+<ion-content class="ion-padding">
+  <form [formGroup]="unidadeForm" (ngSubmit)="submit()">
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Nome fantasia</ion-label>
+          <ion-input formControlName="nomeFantasia" placeholder="Nome fantasia"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Razão social</ion-label>
+          <ion-input formControlName="razaoSocial" placeholder="Razão social"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">CNPJ</ion-label>
+          <ion-input formControlName="cnpj" placeholder="00.000.000/0000-00"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Representante</ion-label>
+          <ion-input formControlName="representante" placeholder="Nome do responsável"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">E-mail</ion-label>
+          <ion-input formControlName="email" type="email" placeholder="contato@empresa.com"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Telefone</ion-label>
+          <ion-input formControlName="telefone" placeholder="(48) 99999-9999"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Cidade</ion-label>
+          <ion-input formControlName="cidade" placeholder="Cidade"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Estado</ion-label>
+          <ion-input formControlName="estado" placeholder="SC"></ion-input>
+        </ion-item>
+
+        <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="unidadeForm.invalid">
+          Salvar unidade
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>

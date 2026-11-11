@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar [color]="color">
+    <ion-buttons slot="start" *ngIf="showBackButton">
+      <ion-button color="light" (click)="onBackClick()" aria-label="Voltar">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>{{ title }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button color="light" (click)="onConfigClick()" aria-label="Configurações">
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-button>
+      <ion-button color="light" (click)="onLogoutClick()" aria-label="Logout">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

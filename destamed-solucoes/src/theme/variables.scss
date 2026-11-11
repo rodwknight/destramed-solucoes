@@ -1,2 +1,29 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+:root {
+  --app-page-bg: #f5f7fb;
+  --app-surface: #ffffff;
+  --app-surface-alt: #eef2ff;
+  --app-text: #0f172a;
+  --app-text-muted: #475569;
+  --app-border: rgba(15, 23, 42, 0.08);
+  --app-primary: #1d9bf0;
+  --app-primary-strong: #0d1b2a;
+  --app-secondary: #2ec4b6;
+  --app-gradient-start: #0d1b2a;
+  --app-gradient-end: #1b263b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --app-page-bg: #0b1220;
+    --app-surface: #111827;
+    --app-surface-alt: #182335;
+    --app-text: #edf6ff;
+    --app-text-muted: #bfd0ea;
+    --app-border: rgba(148, 163, 184, 0.18);
+    --app-primary: #5aa9ff;
+    --app-primary-strong: #dbeafe;
+    --app-secondary: #4fd1c5;
+    --app-gradient-start: #030712;
+    --app-gradient-end: #0f172a;
+  }
+}

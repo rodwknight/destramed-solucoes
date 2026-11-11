@@ -1,0 +1,14 @@
+.metadata-end-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+ion-item {
+  --padding-start: 12px;
+}
+
+ion-note {
+  font-size: 0.74rem;
+}

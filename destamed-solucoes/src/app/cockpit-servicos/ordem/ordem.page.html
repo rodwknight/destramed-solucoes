@@ -1,0 +1,21 @@
+<app-header title="Ordens" color="secondary"></app-header>
+
+<ion-content class="ion-padding">
+  <ion-searchbar placeholder="Buscar ordens" (ionInput)="onSearchChange($event.detail.value)"></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let ordem of ordens">
+      <ion-icon name="file-tray-full-outline" slot="start" color="primary"></ion-icon>
+      <ion-label>
+        <strong>{{ ordem.codOrdem }}</strong>
+        <p>{{ ordem.cliente.nomeFantasia }}</p>
+        <ion-note>{{ ordem.unidade.nomeFantasia }}</ion-note>
+      </ion-label>
+      <ion-note slot="end">{{ ordem.createdAt | date: 'dd/MM/yyyy' }}</ion-note>
+    </ion-item>
+  </ion-list>
+
+  <ion-item *ngIf="ordens.length === 0">
+    <ion-label class="ion-text-center">Nenhuma ordem encontrada.</ion-label>
+  </ion-item>
+</ion-content>

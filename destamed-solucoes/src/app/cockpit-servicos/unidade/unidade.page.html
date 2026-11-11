@@ -1,0 +1,27 @@
+<app-header title="Unidades" color="secondary"></app-header>
+
+
+<ion-content class="ion-padding">
+  <ion-searchbar placeholder="Buscar unidades" (ionInput)="onSearchChange($event.target.value)"></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let unidade of unidades" lines="full">
+      <ion-icon name="business-outline" slot="start" color="primary"></ion-icon>
+      <ion-label>
+        <h2>{{ unidade.codUnidade }}</h2>
+        <p>{{ unidade.nomeFantasia }}</p>
+      </ion-label>
+      <ion-badge color="medium">{{ unidade.estado }}</ion-badge>
+    </ion-item>
+  </ion-list>
+
+  <ion-item *ngIf="unidades.length === 0">
+    <ion-label class="ion-text-center">Nenhuma unidade encontrada!</ion-label>
+  </ion-item>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="adicionarUnidade()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,27 @@
+<app-header title="Serviços" color="secondary"></app-header>
+
+
+<ion-content class="ion-padding">
+  <ion-searchbar placeholder="Buscar serviços" (ionInput)="onSearchChange($event.target.value)"></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let servico of servicos" lines="full">
+      <ion-icon name="construct-outline" slot="start" color="primary"></ion-icon>
+      <ion-label>
+        <h2>{{ servico.codServico }}</h2>
+        <p>{{ servico.nome }}</p>
+      </ion-label>
+      <ion-note slot="end">{{ servico.valor | currency:'BRL' }}</ion-note>
+    </ion-item>
+  </ion-list>
+
+  <ion-item *ngIf="servicos.length === 0">
+    <ion-label class="ion-text-center">Nenhum serviço encontrado!</ion-label>
+  </ion-item>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="adicionarServico()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

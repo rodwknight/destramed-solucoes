@@ -1,0 +1,32 @@
+<app-header title="Configuração" color="secondary"></app-header>
+
+
+<ion-content class="ion-padding">
+  <form [formGroup]="configuracaoForm" (ngSubmit)="salvar()">
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">IP</ion-label>
+          <ion-input formControlName="ip" placeholder="192.168.0.10"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Porta</ion-label>
+          <ion-input formControlName="porta" type="number" placeholder="4200"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Protocolo</ion-label>
+          <ion-select formControlName="protocolo" interface="popover">
+            <ion-select-option value="https">Https</ion-select-option>
+            <ion-select-option value="http">Http</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="configuracaoForm.invalid">
+          Salvar configuração
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>

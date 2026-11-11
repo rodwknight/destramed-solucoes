@@ -1,0 +1,116 @@
+<app-header title="Nova proposta" color="secondary"></app-header>
+
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Unidade</ion-label>
+          <ion-select formControlName="unidade" placeholder="Selecione a unidade" interface="popover" (ionChange)="alterarUnidade($event)">
+            <ion-select-option *ngFor="let unidade of unidades" [value]="unidade">
+              {{ unidade.codUnidade }} - {{ unidade.nomeFantasia }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-list *ngIf="unidadeSelecionada.codUnidade">
+          <ion-item>
+            <ion-label>
+              <h3>CNPJ</h3>
+              <p>{{ unidadeSelecionada.cnpj }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h3>Razão Social</h3>
+              <p>{{ unidadeSelecionada.razaoSocial }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h3>Nome Fantasia</h3>
+              <p>{{ unidadeSelecionada.nomeFantasia }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ion-item>
+          <ion-label position="stacked">Cliente</ion-label>
+          <ion-select formControlName="cliente" placeholder="Selecione o cliente" interface="popover" (ionChange)="alterarCliente($event)">
+            <ion-select-option *ngFor="let cliente of clientes" [value]="cliente">
+              {{ cliente.codCliente }} - {{ cliente.nomeFantasia }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-list *ngIf="clienteSelecionado.codCliente">
+          <ion-item>
+            <ion-label>
+              <h3>CNPJ</h3>
+              <p>{{ clienteSelecionado.cnpj }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h3>Razão Social</h3>
+              <p>{{ clienteSelecionado.razaoSocial }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h3>Nome Fantasia</h3>
+              <p>{{ clienteSelecionado.nomeFantasia }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ion-item>
+          <ion-label position="stacked">Nº funcionários</ion-label>
+          <ion-input formControlName="funcionarios" type="number" [value]="funcionarios"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-toggle formControlName="deslocamento" (ionChange)="alterarDeslocamento($event)">Haverá deslocamento?</ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Valor do deslocamento</ion-label>
+          <ion-input formControlName="valorDeslocamento" type="text" placeholder="0,00" (ionBlur)="somaDeslocamento()"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="add-circle" slot="end" size="large" color="primary" (click)="adicionarServico()"></ion-icon>
+          <ion-label position="stacked">Serviço</ion-label>
+          <ion-select formControlName="servico" placeholder="Selecione o serviço" interface="popover" (ionChange)="alterarServico($event)">
+            <ion-select-option *ngFor="let servico of servicos" [value]="servico">
+              {{ servico.codServico }} - {{ servico.nome }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Serviços adicionados ({{ listaServicosAdicionados.length }})</ion-label>
+        </ion-item>
+
+        <ion-item *ngFor="let servico of listaServicosAdicionados">
+          <ion-icon name="trash" slot="start" color="danger" (click)="removeServico(servico)"></ion-icon>
+          <ion-label>{{ servico.codServico }} - {{ servico.nome }}</ion-label>
+          <ion-text slot="end">{{ servico.valor | currency: 'BRL' }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h3>Total serviços: <span>{{ totalServicos | currency: 'BRL' }}</span></h3>
+            <h3 *ngIf="form.get('deslocamento')?.value">Deslocamento: <span>{{ form.get('valorDeslocamento')?.value || '0,00' }}</span></h3>
+            <h3>Total: <span>{{ total | currency: 'BRL' }}</span></h3>
+          </ion-label>
+        </ion-item>
+
+        <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="form.invalid">
+          Gerar proposta
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>

@@ -1,0 +1,41 @@
+.welcome-box {
+  background: linear-gradient(135deg, var(--app-gradient-start) 0%, var(--app-gradient-end) 100%);
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.welcome-box h2,
+.welcome-box p {
+  margin: 0;
+}
+
+.welcome-box p {
+  margin-top: 6px;
+  opacity: 0.85;
+}
+
+.metric-card {
+  border-radius: 18px;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.metric-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 1.875rem;
+}
+
+.metric-card h3 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}

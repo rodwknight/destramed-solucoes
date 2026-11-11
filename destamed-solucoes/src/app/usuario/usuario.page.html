@@ -1,0 +1,30 @@
+<app-header title="Usuários" color="secondary"></app-header>
+
+
+<ion-content class="ion-padding">
+  <ion-searchbar placeholder="Buscar usuários" (ionInput)="onSearchChange($event.target.value)"></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let usuario of usuarios" lines="full">
+      <ion-icon name="person-circle-outline" slot="start" color="primary"></ion-icon>
+      <ion-label>
+        <ion-text class="ion-text-uppercase">{{ usuario.nome }}</ion-text>
+        <ion-note color="medium" class="ion-text-wrap">{{ usuario.email }}</ion-note>
+      </ion-label>
+      <div class="metadata-end-wrapper" slot="end">
+        <ion-badge color="primary">{{ usuario.perfil }}</ion-badge>
+        <ion-note color="medium">{{ usuario.createdAt | date: 'dd/MM/yyyy' }}</ion-note>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-item *ngIf="usuarios.length === 0">
+    <ion-label class="ion-text-center">Nenhum usuário encontrado!</ion-label>
+  </ion-item>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="adicionarUsuario()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,33 @@
+<app-header title="Novo usuário" color="secondary"></app-header>
+
+
+<ion-content class="ion-padding">
+  <form [formGroup]="usuarioForm" (ngSubmit)="submit()">
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Nome</ion-label>
+          <ion-input formControlName="nome" placeholder="Nome completo"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">E-mail</ion-label>
+          <ion-input formControlName="email" type="email" placeholder="usuario@empresa.com"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Perfil</ion-label>
+          <ion-select formControlName="perfil" interface="popover">
+            <ion-select-option value="Administrador">Administrador</ion-select-option>
+            <ion-select-option value="Operador">Operador</ion-select-option>
+            <ion-select-option value="Gestor">Gestor</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="usuarioForm.invalid">
+          Salvar usuário
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>

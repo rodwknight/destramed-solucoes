@@ -1,0 +1,23 @@
+ion-content {
+  --background: var(--app-page-bg);
+}
+
+ion-item {
+  --background: var(--app-surface);
+  --color: var(--app-text);
+  --border-color: var(--app-border);
+  margin-bottom: 12px;
+  border-radius: 12px;
+}
+
+.metadata-end-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+ion-label ion-note {
+  font-size: 0.85rem;
+  display: flex;
+}

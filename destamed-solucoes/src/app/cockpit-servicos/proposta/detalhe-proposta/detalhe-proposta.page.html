@@ -1,0 +1,48 @@
+<app-header title="Detalhe da proposta" color="secondary"></app-header>
+
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ proposta.codProposta || 'PROP-000' }}</ion-card-title>
+      <ion-card-subtitle>{{ proposta.cliente.codCliente || 'CLI-000' }} - {{ proposta.cliente.nomeFantasia || 'Cliente não informado' }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list lines="full">
+        <ion-item>
+          <ion-label>Cliente</ion-label>
+          <ion-note slot="end">{{ proposta.cliente.nomeFantasia || 'Não informado' }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Unidade</ion-label>
+          <ion-note slot="end">{{ proposta.unidade.nomeFantasia || 'Não informado' }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Data de envio</ion-label>
+          <ion-note slot="end">{{ proposta.createdAt | date: 'dd/MM/yyyy' }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Responsável</ion-label>
+          <ion-note slot="end">{{ proposta.usuario.nome || proposta.responsavel || 'Não informado' }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Status</ion-label>
+          <ion-badge [color]="typeStatus(proposta.status)" slot="end">
+            {{ labelStatus(proposta.status) }}
+          </ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Observação</ion-label>
+          <p>{{ proposta.observacao || 'Sem observações registradas.' }}</p>
+        </ion-item>
+      </ion-list>
+
+      <div class="detail-actions">
+        <ion-button expand="block" color="primary" (click)="enviar()">Enviar</ion-button>
+        <ion-button expand="block" fill="outline" color="success" (click)="aprovar()">Aprovar</ion-button>
+        <ion-button expand="block" fill="outline" color="danger" (click)="rejeitar()">Rejeitar</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
