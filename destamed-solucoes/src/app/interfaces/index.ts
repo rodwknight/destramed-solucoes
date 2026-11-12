@@ -1,4 +1,2 @@
-export * from './cliente';
-export * from './common';
-export * from './configuracao';
+export * from './domain';
 export * from './lista-usuarios';

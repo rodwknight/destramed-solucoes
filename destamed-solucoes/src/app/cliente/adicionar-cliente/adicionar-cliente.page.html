@@ -1,0 +1,87 @@
+<app-header title="Adicionar cliente" color="secondary"></app-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
+    <ion-card>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-md="6">
+              <ion-input label="CNPJ" labelPlacement="stacked" placeholder="00.000.000/0000-00" formControlName="cnpj"></ion-input>
+              <ion-note color="danger" *ngIf="isFieldInvalid('cnpj')">CNPJ é obrigatório.</ion-note>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-input label="Razão social" labelPlacement="stacked" formControlName="razaoSocial"></ion-input>
+              <ion-note color="danger" *ngIf="isFieldInvalid('razaoSocial')">Razão social é obrigatória.</ion-note>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-input label="Nome fantasia" labelPlacement="stacked" formControlName="nomeFantasia"></ion-input>
+              <ion-note color="danger" *ngIf="isFieldInvalid('nomeFantasia')">Nome fantasia é obrigatório.</ion-note>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-input label="Número de funcionários" labelPlacement="stacked" type="number" min="0" formControlName="funcionarios"></ion-input>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-input label="Representante legal" labelPlacement="stacked" formControlName="representante"></ion-input>
+              <ion-note color="danger" *ngIf="isFieldInvalid('representante')">Representante é obrigatório.</ion-note>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-input label="CPF do representante" labelPlacement="stacked" formControlName="cpf"></ion-input>
+              <ion-note color="danger" *ngIf="isFieldInvalid('cpf')">CPF é obrigatório.</ion-note>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-input label="RG do representante" labelPlacement="stacked" formControlName="rg"></ion-input>
+              <ion-note color="danger" *ngIf="isFieldInvalid('rg')">RG é obrigatório.</ion-note>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-input label="E-mail" labelPlacement="stacked" type="email" formControlName="email"></ion-input>
+              <ion-note color="danger" *ngIf="isFieldInvalid('email')">Informe um e-mail válido.</ion-note>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-input label="Telefone" labelPlacement="stacked" type="tel" formControlName="telefone"></ion-input>
+              <ion-note color="danger" *ngIf="isFieldInvalid('telefone')">Telefone é obrigatório.</ion-note>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-input label="Celular" labelPlacement="stacked" type="tel" formControlName="celular"></ion-input>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input label="Rua" labelPlacement="stacked" formControlName="rua"></ion-input>
+              <ion-note color="danger" *ngIf="isFieldInvalid('rua')">Rua é obrigatória.</ion-note>
+            </ion-col>
+            <ion-col size="12" size-md="4">
+              <ion-input label="Número" labelPlacement="stacked" inputmode="numeric" formControlName="numero"></ion-input>
+              <ion-note color="danger" *ngIf="isFieldInvalid('numero')">Informe um número válido.</ion-note>
+            </ion-col>
+            <ion-col size="12" size-md="8">
+              <ion-input label="Complemento" labelPlacement="stacked" formControlName="complemento"></ion-input>
+            </ion-col>
+            <ion-col size="12" size-md="4">
+              <ion-input label="País" labelPlacement="stacked" formControlName="pais"></ion-input>
+            </ion-col>
+            <ion-col size="12" size-md="4">
+              <ion-input label="Estado (UF)" labelPlacement="stacked" maxlength="2" formControlName="estado"></ion-input>
+              <ion-note color="danger" *ngIf="isFieldInvalid('estado')">Informe a UF com até 2 caracteres.</ion-note>
+            </ion-col>
+            <ion-col size="12" size-md="4">
+              <ion-input label="Cidade" labelPlacement="stacked" formControlName="cidade"></ion-input>
+              <ion-note color="danger" *ngIf="isFieldInvalid('cidade')">Cidade é obrigatória.</ion-note>
+            </ion-col>
+            <ion-col size="12" size-md="4">
+              <ion-input label="CEP" labelPlacement="stacked" formControlName="cep"></ion-input>
+              <ion-note color="danger" *ngIf="isFieldInvalid('cep')">CEP é obrigatório.</ion-note>
+            </ion-col>
+            <ion-col size="12" size-md="8">
+              <ion-input label="Bairro" labelPlacement="stacked" formControlName="bairro"></ion-input>
+              <ion-note color="danger" *ngIf="isFieldInvalid('bairro')">Bairro é obrigatório.</ion-note>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <div class="form-actions">
+          <ion-button fill="outline" type="button" (click)="voltar()">Cancelar</ion-button>
+          <ion-button type="submit">Salvar cliente</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>

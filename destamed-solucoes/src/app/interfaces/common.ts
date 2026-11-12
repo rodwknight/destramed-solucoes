@@ -14,11 +14,6 @@ export interface UsuarioLogado {
   nome: string;
 }
 
-export interface ListaEmpresa {
-  id: string;
-  nome: string;
-}
-
 export interface ListaUsuario {
   nome: string;
 }

@@ -15,7 +15,15 @@ export class HomePage implements OnInit {
   private localStorage = new LocalStorageService();
 
   cards = [
-    { title: 'Cockpit Serviços', value: '07', icon: 'folder-open', route: '/cockpit-servicos', color: 'secondary' },
+    {
+      title: 'Propostas e Contratos',
+      value: '02',
+      icon: 'folder-open',
+      route: '/propostas-contratos',
+      color: 'secondary',
+    },
+    { title: 'Unidades', value: '05', icon: 'business', route: '/unidade', color: 'secondary' },
+    { title: 'Ordens', value: '09', icon: 'file-tray-full', route: '/ordem', color: 'secondary' },
     { title: 'Clientes', value: '18', icon: 'people', route: '/cliente', color: 'secondary' },
   ];
 

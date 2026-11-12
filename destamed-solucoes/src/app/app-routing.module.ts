@@ -23,6 +23,25 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'ordem',
+    loadChildren: () => import('./ordem/ordem.module').then((m) => m.OrdemPageModule),
+  },
+  {
+    path: 'servico',
+    loadChildren: () => import('./servico/servico.module').then((m) => m.ServicoPageModule),
+  },
+  {
+    path: 'unidade',
+    loadChildren: () => import('./unidade/unidade.module').then((m) => m.UnidadePageModule),
+  },
+  {
+    path: 'propostas-contratos',
+    loadChildren: () =>
+      import('./propostas-contratos/propostas-contratos.module').then(
+        (m) => m.PropostasContratosPageModule,
+      ),
+  },
+  {
     path: 'cliente',
     loadChildren: () => import('./cliente/cliente.module').then((m) => m.ClientePageModule),
   },

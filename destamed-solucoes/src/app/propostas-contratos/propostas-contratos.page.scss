@@ -1,0 +1,23 @@
+.metric-card {
+  border-radius: 18px;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.metric-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 1.875rem;
+}
+
+.metric-card h3 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}

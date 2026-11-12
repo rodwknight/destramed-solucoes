@@ -1,0 +1,74 @@
+<app-header title="Detalhe da ordem" color="secondary"></app-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        {{ ordem.codOrdem }}
+        <ion-badge [color]="typeStatus(ordem.status)">{{ labelStatus(ordem.status) }}</ion-badge>
+      </ion-card-title>
+      <ion-card-subtitle>{{ ordem.createdAt | date: 'dd/MM/yyyy' }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>
+          <h3>Unidade</h3>
+          <p>{{ ordem.unidade.codUnidade }} - {{ ordem.unidade.nomeFantasia }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <h3>Cliente</h3>
+          <p>{{ ordem.cliente.codCliente }} - {{ ordem.cliente.nomeFantasia }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <h3>Responsável</h3>
+          <p>{{ ordem.usuario.nome }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <h3>Número de funcionários</h3>
+          <p>{{ ordem.funcionarios ?? 0 }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Serviços</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let item of ordem.ordemServicos ?? []">
+          <ion-label>
+            <h3>{{ item.servicos.codServico }}</h3>
+            <p>{{ item.servicos.descricao }}</p>
+          </ion-label>
+          <ion-note slot="end">{{ item.valor | currency: 'BRL' }}</ion-note>
+        </ion-item>
+        <ion-item *ngIf="ordem.deslocamento">
+          <ion-label>Deslocamento</ion-label>
+          <ion-note slot="end">{{ ordem.valorDeslocamento | currency: 'BRL' }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Total</strong></ion-label>
+          <ion-note slot="end"><strong>{{ ordem.total ?? 0 | currency: 'BRL' }}</strong></ion-note>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" *ngIf="ordem.status === 1" (click)="iniciar()">Iniciar ordem</ion-button>
+  <ion-button expand="block" *ngIf="ordem.status === 2" (click)="finalizar()">Finalizar ordem</ion-button>
+  <ion-button
+    expand="block"
+    color="danger"
+    *ngIf="ordem.status === 1 || ordem.status === 2"
+    (click)="cancelar()">
+    Cancelar ordem
+  </ion-button>
+</ion-content>

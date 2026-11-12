@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ContratoPage } from './contrato/contrato.page';
 import { CockpitServicosPage } from './cockpit-servicos.page';
-import { OrdemPage } from './ordem/ordem.page';
 
 const routes: Routes = [
   {
@@ -12,27 +10,31 @@ const routes: Routes = [
     children: [
       {
         path: 'contrato',
-        component: ContratoPage,
-      },
-      {
-        path: 'empresa',
-        loadChildren: () => import('./empresa/empresa.module').then((m) => m.EmpresaPageModule),
+        redirectTo: '/propostas-contratos/contrato',
       },
       {
         path: 'ordem',
-        component: OrdemPage,
+        loadChildren: () => import('../ordem/ordem.module').then((m) => m.OrdemPageModule),
       },
       {
         path: 'proposta',
-        loadChildren: () => import('./proposta/proposta.module').then((m) => m.PropostaPageModule),
+        loadChildren: () =>
+          import('../propostas-contratos/proposta/proposta.module').then((m) => m.PropostaPageModule),
+      },
+      {
+        path: 'propostas-contratos',
+        loadChildren: () =>
+          import('../propostas-contratos/propostas-contratos.module').then(
+            (m) => m.PropostasContratosPageModule,
+          ),
       },
       {
         path: 'servico',
-        loadChildren: () => import('./servico/servico.module').then((m) => m.ServicoPageModule),
+        redirectTo: '/servico',
       },
       {
         path: 'unidade',
-        loadChildren: () => import('./unidade/unidade.module').then((m) => m.UnidadePageModule),
+        loadChildren: () => import('../unidade/unidade.module').then((m) => m.UnidadePageModule),
       },
       {
         path: 'usuario',

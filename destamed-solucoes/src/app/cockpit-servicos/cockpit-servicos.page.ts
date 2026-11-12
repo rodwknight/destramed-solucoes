@@ -12,12 +12,10 @@ export class CockpitServicosPage {
   isChildRoute = false;
 
   cards = [
-    { title: 'Contratos', value: '24', icon: 'briefcase', route: '/cockpit-servicos/contrato', color: 'secondary' },
-    { title: 'Empresas', value: '04', icon: 'business', route: '/cockpit-servicos/empresa', color: 'secondary' },
-    { title: 'Ordens', value: '09', icon: 'file-tray-full', route: '/cockpit-servicos/ordem', color: 'secondary' },
-    { title: 'Propostas', value: '12', icon: 'create', route: '/cockpit-servicos/proposta', color: 'secondary' },
-    { title: 'Serviços', value: '07', icon: 'construct', route: '/cockpit-servicos/servico', color: 'secondary' },
-    { title: 'Unidades', value: '05', icon: 'business', route: '/cockpit-servicos/unidade', color: 'secondary' },
+    { title: 'Contratos', value: '24', icon: 'briefcase', route: '/propostas-contratos/contrato', color: 'secondary' },
+    { title: 'Propostas', value: '12', icon: 'create', route: '/propostas-contratos/proposta', color: 'secondary' },
+    { title: 'Serviços', value: '07', icon: 'construct', route: '/servico', color: 'secondary' },
+    { title: 'Unidades', value: '05', icon: 'business', route: '/unidade', color: 'secondary' },
     { title: 'Usuários', value: '04', icon: 'person', route: '/cockpit-servicos/usuario', color: 'secondary' },
   ];
 
