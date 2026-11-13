@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
+import { firstValueFrom } from 'rxjs';
+import { StatusContrato, listaStatusContrato } from '../../enums/status-contrato';
 import { ListaContrato } from '../../interfaces/contrato';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { ContratoService } from '../../services/contrato.service';
 
 @Component({
   selector: 'app-contrato',
@@ -10,65 +13,81 @@ import { LocalStorageService } from '../../services/local-storage.service';
   styleUrls: ['./contrato.page.scss'],
   standalone: false,
 })
-export class ContratoPage implements OnInit {
-  private localStorage = new LocalStorageService<ListaContrato[]>();
+export class ContratoPage {
   contratos: ListaContrato[] = [];
+  private readonly localStorage = new LocalStorageService();
 
   constructor(
-    public router: Router,
-    private loadingCtrl: LoadingController,
+    private readonly router: Router,
+    private readonly loadingCtrl: LoadingController,
+    private readonly toastCtrl: ToastController,
+    private readonly contratoService: ContratoService,
   ) {
     if (!this.localStorage.exists('accesskey')) {
       this.router.navigate(['/login']);
     }
   }
 
-  async ngOnInit(): Promise<void> {
+  async ionViewWillEnter(): Promise<void> {
     this.contratos = await this.buscaLista();
   }
 
-  public async onSearchChange(searchValue: string | null | undefined): Promise<void> {
-    const data = this.localStorage.getItem('contratos') ?? [];
-    const term = (searchValue ?? '').trim().toLowerCase();
+  async onSearchChange(searchValue: string | null | undefined): Promise<void> {
+    const { contratos } = await firstValueFrom(this.contratoService.list(searchValue ?? undefined));
+    this.contratos = contratos;
+  }
 
-    if (!term) {
-      this.contratos = data as ListaContrato[];
-      return;
-    }
+  labelStatus(status: number): string {
+    return listaStatusContrato.get(status)?.label ?? 'Em análise';
+  }
 
-    this.contratos = (data as ListaContrato[]).filter((contrato) =>
-      (contrato.codContrato ?? '').toLowerCase().includes(term) ||
-      (contrato.cliente?.nomeFantasia ?? '').toLowerCase().includes(term) ||
-      (contrato.unidade?.nomeFantasia ?? '').toLowerCase().includes(term),
-    );
+  typeStatus(status: number): string {
+    return listaStatusContrato.get(status)?.type ?? 'medium';
+  }
+
+  detalheContrato(contrato: ListaContrato): void {
+    this.router.navigate(['/propostas-contratos/contrato/detalhe-contrato', contrato.id]);
+  }
+
+  aprovar(contrato: ListaContrato): Promise<void> {
+    return this.atualizarStatus(contrato, StatusContrato.APROVADO, 'Contrato aprovado com sucesso!');
+  }
+
+  reprovar(contrato: ListaContrato): Promise<void> {
+    return this.atualizarStatus(contrato, StatusContrato.REJEITADO, 'Contrato reprovado com sucesso!');
   }
 
   private async buscaLista(): Promise<ListaContrato[]> {
     const loading = await this.loadingCtrl.create({ message: 'Buscando contratos...' });
     await loading.present();
 
-    const contratos = (this.localStorage.getItem('contratos') ?? []) as ListaContrato[];
-
-    if (!contratos.length) {
-      const defaultContratos: ListaContrato[] = [
-        {
-          id: 'CT-001',
-          codContrato: 'CT-001',
-          status: 1,
-          propostas: [],
-          cliente: { codCliente: 'CLI-001', nomeFantasia: 'Alpha Construções' },
-          unidade: { codUnidade: 'UN-001', nomeFantasia: 'Destramed' },
-          usuario: { nome: 'Administrador' },
-          createdAt: new Date(),
-        },
-      ];
-
-      this.localStorage.setItem('contratos', defaultContratos);
+    try {
+      const { contratos } = await firstValueFrom(this.contratoService.list());
+      return contratos;
+    } finally {
       await loading.dismiss();
-      return defaultContratos;
     }
+  }
 
-    await loading.dismiss();
-    return contratos;
+  private async atualizarStatus(contrato: ListaContrato, status: StatusContrato, successMessage: string): Promise<void> {
+    const loading = await this.loadingCtrl.create({ message: 'Atualizando contrato...' });
+    await loading.present();
+
+    try {
+      const result = await firstValueFrom(this.contratoService.update(contrato, status));
+      if (result.success) {
+        this.contratos = result.contratos;
+      }
+
+      const toast = await this.toastCtrl.create({
+        message: result.success ? successMessage : result.message,
+        color: result.success ? 'success' : 'danger',
+        duration: 4000,
+        position: 'bottom',
+      });
+      await toast.present();
+    } finally {
+      await loading.dismiss();
+    }
   }
 }

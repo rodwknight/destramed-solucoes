@@ -1,0 +1,13 @@
+ion-card {
+  margin-top: 16px;
+}
+
+.detail-actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+ion-item {
+  --padding-start: 0;
+}

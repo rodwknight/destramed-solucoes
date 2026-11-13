@@ -1,0 +1,94 @@
+<app-header title="Detalhe do contrato" color="secondary"></app-header>
+
+<ion-content class="ion-padding" *ngIf="contrato as item">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ item.codContrato }}</ion-card-title>
+      <ion-card-subtitle>
+        {{ item.cliente.codCliente }} - {{ item.cliente.nomeFantasia }}
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list lines="full">
+        <ion-item>
+          <ion-label>Proposta</ion-label>
+          <ion-note slot="end">{{ item.codProposta || 'Não informada' }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Data do contrato</ion-label>
+          <ion-note slot="end">{{ item.createdAt | date: 'dd/MM/yyyy' }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Responsável</ion-label>
+          <ion-note slot="end">{{ item.usuario.nome || 'Não informado' }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Contratante</ion-label>
+          <ion-note slot="end">{{ item.unidade.codUnidade }} - {{ item.unidade.nomeFantasia }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Contratado</ion-label>
+          <ion-note slot="end">{{ item.cliente.codCliente }} - {{ item.cliente.nomeFantasia }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Número de funcionários</ion-label>
+          <ion-note slot="end">{{ item.funcionarios }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Status</ion-label>
+          <ion-badge [color]="typeStatus(item.status)" slot="end">
+            {{ labelStatus(item.status) }}
+          </ion-badge>
+        </ion-item>
+      </ion-list>
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Serviços</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list lines="full">
+            <ion-item *ngFor="let servico of item.servicos">
+              <ion-label>
+                <h3>{{ servico.servicos.codServico }} - {{ servico.servicos.nome }}</h3>
+                <p>{{ servico.servicos.descricao }}</p>
+              </ion-label>
+              <ion-note slot="end">{{ servico.valor | currency: 'BRL' }}</ion-note>
+            </ion-item>
+            <ion-item *ngIf="item.deslocamento">
+              <ion-label>Deslocamento</ion-label>
+              <ion-note slot="end">{{ item.valorDeslocamento | currency: 'BRL' }}</ion-note>
+            </ion-item>
+            <ion-item>
+              <ion-label><strong>Total</strong></ion-label>
+              <ion-note slot="end"><strong>{{ item.total | currency: 'BRL' }}</strong></ion-note>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+      <div class="detail-actions">
+        <ion-button
+          expand="block"
+          color="success"
+          (click)="aprovar()"
+          [disabled]="item.status !== 1"
+        >
+          <ion-icon slot="start" name="checkmark"></ion-icon>
+          Aprovar
+        </ion-button>
+        <ion-button
+          expand="block"
+          fill="outline"
+          color="danger"
+          (click)="rejeitar()"
+          [disabled]="item.status !== 1"
+        >
+          <ion-icon slot="start" name="close"></ion-icon>
+          Rejeitar
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

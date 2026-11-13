@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ContratoPage } from './contrato/contrato.page';
 import { PropostasContratosPage } from './propostas-contratos.page';
 
 const routes: Routes = [
@@ -12,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'contrato',
-    component: ContratoPage,
+    loadChildren: () => import('./contrato/contrato.module').then((m) => m.ContratoPageModule),
   },
   {
     path: 'proposta',

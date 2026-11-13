@@ -1,7 +1,8 @@
+import { PropostasServicos } from './servico';
+
 export interface ListaContrato extends Record<string, any> {
   id: string;
   codContrato: string;
-  propostas: any[];
   status: number;
   cliente: {
     codCliente: string;
@@ -15,26 +16,25 @@ export interface ListaContrato extends Record<string, any> {
     nome: string;
   };
   createdAt?: Date;
+  funcionarios?: number;
+  deslocamento?: boolean;
+  valorDeslocamento?: number;
+  total?: number;
+  idProposta?: string;
+  codProposta?: string;
+  statusProposta?: number;
+  servicos?: PropostasServicos[];
 }
 
-export interface DetalheContrato {
-  id: string;
-  codContrato: string;
+export interface DetalheContrato extends ListaContrato {
   funcionarios: number;
   deslocamento: boolean;
   valorDeslocamento: number;
-  total: number;
-  createdAt: Date;
-  status: number;
   idProposta: string;
   codProposta: string;
   statusProposta: number;
-  servicos: any[];
-  codUnidade: string;
-  nomeUnidade: string;
-  codCliente: string;
-  nomeCliente: string;
-  nomeUsuario: string;
+  total: number;
+  servicos: PropostasServicos[];
 }
 
 export interface MockContrato {

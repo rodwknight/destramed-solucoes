@@ -42,6 +42,6 @@ export class AdicionarUsuarioPage implements OnInit {
     };
 
     this.localStorage.setItem('usuarios', [...(current as ListaUsuarios[]), nextItem]);
-    this.router.navigate(['/cockpit-servicos/usuario']);
+    this.router.navigate(['/usuario']);
   }
 }

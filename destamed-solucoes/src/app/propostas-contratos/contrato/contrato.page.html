@@ -3,15 +3,56 @@
 <ion-content class="ion-padding">
   <ion-searchbar placeholder="Buscar contratos" (ionInput)="onSearchChange($event.detail.value)"></ion-searchbar>
 
-  <ion-list>
-    <ion-item *ngFor="let contrato of contratos">
-      <ion-icon name="briefcase-outline" slot="start" color="primary"></ion-icon>
-      <ion-label>
+  <ion-list [inset]="true" class="ion-no-margin-vertical">
+    <ion-item detail="false" *ngFor="let contrato of contratos">
+      <ion-label (click)="detalheContrato(contrato)">
         <strong>{{ contrato.codContrato }}</strong>
-        <p>{{ contrato.cliente.nomeFantasia }}</p>
-        <ion-note>{{ contrato.unidade.nomeFantasia }}</ion-note>
+        <ion-text class="ion-text-uppercase">
+          <h3>{{ contrato.cliente.codCliente }} - {{ contrato.cliente.nomeFantasia }}</h3>
+        </ion-text>
+        <ion-text class="ion-text-wrap">
+          <h3>{{ contrato.unidade.codUnidade }} - {{ contrato.unidade.nomeFantasia }}</h3>
+        </ion-text>
+        <ion-note color="medium" class="ion-text-wrap">{{ contrato.usuario.nome }}</ion-note>
       </ion-label>
-      <ion-note slot="end">{{ contrato.createdAt | date: 'dd/MM/yyyy' }}</ion-note>
+
+      <div class="metadata-end-wrapper" slot="end">
+        <ion-chip [color]="typeStatus(contrato.status)">
+          {{ labelStatus(contrato.status) }}
+        </ion-chip>
+        <ion-note color="medium">{{ contrato.createdAt | date: 'dd/MM/yyyy' }}</ion-note>
+        <div class="contract-actions">
+          <ion-button
+            *ngIf="contrato.status === 1; else semAcoes"
+            shape="round"
+            fill="clear"
+            [id]="'mais-opcoes-' + contrato.id"
+            aria-label="Opções do contrato"
+          >
+            <ion-icon name="ellipsis-vertical" slot="icon-only"></ion-icon>
+          </ion-button>
+          <ng-template #semAcoes>
+            <span class="contract-actions-spacer" aria-hidden="true"></span>
+          </ng-template>
+        </div>
+
+        <ion-popover [trigger]="'mais-opcoes-' + contrato.id" [dismissOnSelect]="true" *ngIf="contrato.status === 1">
+          <ng-template>
+            <ion-content>
+              <ion-list lines="none">
+                <ion-item [button]="true" (click)="aprovar(contrato)">
+                  <ion-icon slot="start" name="checkmark"></ion-icon>
+                  <ion-text>Aprovar</ion-text>
+                </ion-item>
+                <ion-item [button]="true" (click)="reprovar(contrato)">
+                  <ion-icon slot="start" name="close"></ion-icon>
+                  <ion-text>Rejeitar</ion-text>
+                </ion-item>
+              </ion-list>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </div>
     </ion-item>
   </ion-list>
 

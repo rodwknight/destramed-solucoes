@@ -39,9 +39,32 @@
       </ion-list>
 
       <div class="detail-actions">
-        <ion-button expand="block" color="primary" (click)="enviar()">Enviar</ion-button>
-        <ion-button expand="block" fill="outline" color="success" (click)="aprovar()">Aprovar</ion-button>
-        <ion-button expand="block" fill="outline" color="danger" (click)="rejeitar()">Rejeitar</ion-button>
+        <ion-button
+          expand="block"
+          color="primary"
+          (click)="enviar()"
+          [disabled]="proposta.status !== 1"
+        >
+          Enviar
+        </ion-button>
+        <ion-button
+          expand="block"
+          fill="outline"
+          color="success"
+          (click)="aprovar()"
+          [disabled]="proposta.status !== 1"
+        >
+          Aprovar
+        </ion-button>
+        <ion-button
+          expand="block"
+          fill="outline"
+          color="danger"
+          (click)="rejeitar()"
+          [disabled]="proposta.status !== 1"
+        >
+          Rejeitar
+        </ion-button>
       </div>
     </ion-card-content>
   </ion-card>

@@ -16,15 +16,12 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then((m) => m.HomePageModule),
   },
   {
-    path: 'cockpit-servicos',
-    loadChildren: () =>
-      import('./cockpit-servicos/cockpit-servicos.module').then(
-        (m) => m.CockpitServicosPageModule,
-      ),
-  },
-  {
     path: 'ordem',
     loadChildren: () => import('./ordem/ordem.module').then((m) => m.OrdemPageModule),
+  },
+  {
+    path: 'usuario',
+    loadChildren: () => import('./usuario/usuario.module').then((m) => m.UsuarioPageModule),
   },
   {
     path: 'servico',

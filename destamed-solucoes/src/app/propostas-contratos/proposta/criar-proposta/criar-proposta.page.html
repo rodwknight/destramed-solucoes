@@ -76,7 +76,14 @@
 
         <ion-item>
           <ion-label position="stacked">Valor do deslocamento</ion-label>
-          <ion-input formControlName="valorDeslocamento" type="text" placeholder="0,00" (ionBlur)="somaDeslocamento()"></ion-input>
+          <ion-input
+            formControlName="valorDeslocamento"
+            type="text"
+            inputmode="decimal"
+            placeholder="R$ 0,00"
+            (ionInput)="formatarValorDeslocamento($event)"
+            (ionBlur)="somaDeslocamento()"
+          ></ion-input>
         </ion-item>
 
         <ion-item>
@@ -102,7 +109,7 @@
         <ion-item>
           <ion-label>
             <h3>Total serviços: <span>{{ totalServicos | currency: 'BRL' }}</span></h3>
-            <h3 *ngIf="form.get('deslocamento')?.value">Deslocamento: <span>{{ form.get('valorDeslocamento')?.value || '0,00' }}</span></h3>
+            <h3 *ngIf="form.get('deslocamento')?.value">Deslocamento: <span>{{ form.get('valorDeslocamento')?.value || 'R$ 0,00' }}</span></h3>
             <h3>Total: <span>{{ total | currency: 'BRL' }}</span></h3>
           </ion-label>
         </ion-item>

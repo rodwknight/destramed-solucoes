@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { listaStatusProposta } from '../../../enums/status-proposta';
+import { AlertController } from '@ionic/angular';
+import { listaStatusProposta, StatusProposta } from '../../../enums/status-proposta';
 import { ListaProposta } from '../../../interfaces/proposta';
 
 @Component({
@@ -17,7 +18,10 @@ export class DetalhePropostaPage {
     observacao?: string;
   };
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private alertCtrl: AlertController,
+  ) {
     const navigation = this.router.getCurrentNavigation();
     const routeData = navigation?.extras.state?.['proposta'] as (ListaProposta & {
       dataEnvio?: string;
@@ -49,15 +53,44 @@ export class DetalhePropostaPage {
     return listaStatusProposta.get(status)?.type ?? 'medium';
   }
 
-  aprovar(): void {
-    this.proposta.status = 2;
+  async aprovar(): Promise<void> {
+    if (this.proposta.status !== StatusProposta.EM_ANALISE) {
+      return;
+    }
+
+    const alert = await this.alertCtrl.create({
+      message: 'A proposta foi enviada para o cliente e aprovada?',
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel',
+        },
+        {
+          text: 'Sim',
+          role: 'confirm',
+          handler: () => {
+            this.proposta.status = StatusProposta.APROVADO;
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
   rejeitar(): void {
-    this.proposta.status = 3;
+    if (this.proposta.status !== StatusProposta.EM_ANALISE) {
+      return;
+    }
+
+    this.proposta.status = StatusProposta.REJEITADO;
   }
 
   enviar(): void {
-    this.proposta.status = 1;
+    if (this.proposta.status !== StatusProposta.EM_ANALISE) {
+      return;
+    }
+
+    this.proposta.status = StatusProposta.EM_ANALISE;
   }
 }

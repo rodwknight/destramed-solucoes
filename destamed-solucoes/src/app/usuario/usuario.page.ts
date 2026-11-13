@@ -28,7 +28,7 @@ export class UsuarioPage implements OnInit {
   }
 
   public adicionarUsuario = (): void => {
-    this.router.navigate(['/cockpit-servicos/usuario/adicionar-usuario']);
+    this.router.navigate(['/usuario/adicionar-usuario']);
   };
 
   public async onSearchChange(searchValue: string | null | undefined): Promise<void> {

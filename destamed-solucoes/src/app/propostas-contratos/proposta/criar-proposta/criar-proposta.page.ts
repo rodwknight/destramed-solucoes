@@ -61,12 +61,7 @@ export class CriarPropostaPage implements OnInit {
     const usuario = this.localStorage.getItem('usuario') as UsuarioLogado | null;
     const selectedCliente = formValues['cliente'] as FormCliente | undefined;
     const selectedUnidade = formValues['unidade'] as FormUnidade | undefined;
-    const valorDeslocamento = Number(
-      String(formValues.valorDeslocamento ?? '0')
-        .replace('.', '')
-        .replace(',', '.')
-        .replace(/[^\d.]/g, ''),
-    ) || 0;
+    const valorDeslocamento = this.parseValorMoeda(formValues.valorDeslocamento);
 
     const payload: FormProposta = {
       idCliente: this.clienteSelecionado.codCliente ?? selectedCliente?.codCliente ?? '',
@@ -145,6 +140,17 @@ export class CriarPropostaPage implements OnInit {
     }
 
     valorDeslocamento?.updateValueAndValidity();
+    this.resolveValorTotal();
+  }
+
+  formatarValorDeslocamento(event: CustomEvent<{ value?: string | number | null }>): void {
+    const value = String(event.detail.value ?? '');
+    const digits = value.replace(/\D/g, '');
+    const formattedValue = digits
+      ? new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(digits) / 100)
+      : '';
+
+    this.form.get('valorDeslocamento')?.setValue(formattedValue, { emitEvent: false });
     this.resolveValorTotal();
   }
 
@@ -271,13 +277,19 @@ export class CriarPropostaPage implements OnInit {
   }
 
   private resolveValorTotal(): void {
-    const valorDeslocamento = this.form.get('valorDeslocamento')?.value
-      ? String(this.form.get('valorDeslocamento')?.value).replace('.', '').replace(',', '.')
-      : '0';
-
-    const deslocamento = Number(valorDeslocamento) || 0;
+    const deslocamento = this.parseValorMoeda(this.form.get('valorDeslocamento')?.value);
     const total = this.totalServicos + deslocamento;
     this.total = Number(total.toFixed(2));
+  }
+
+  private parseValorMoeda(value: unknown): number {
+    const normalized = String(value ?? '')
+      .replace(/[^\d,.-]/g, '')
+      .replace(/\./g, '')
+      .replace(',', '.');
+    const parsed = Number(normalized);
+
+    return Number.isFinite(parsed) ? parsed : 0;
   }
 
   private somaTotalServicos(): void {

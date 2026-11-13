@@ -23,9 +23,20 @@
         </ion-chip>
         <ion-note color="medium">{{ proposta.createdAt | date: 'dd/MM/yyyy' }}</ion-note>
 
-        <ion-button shape="round" fill="clear" [id]="'mais-opcoes-' + proposta.id" *ngIf="proposta.status === 1">
-          <ion-icon name="ellipsis-vertical" slot="icon-only"></ion-icon>
-        </ion-button>
+        <div class="proposal-actions">
+          <ion-button
+            *ngIf="proposta.status === 1; else semAcoes"
+            shape="round"
+            fill="clear"
+            [id]="'mais-opcoes-' + proposta.id"
+            aria-label="Opções da proposta"
+          >
+            <ion-icon name="ellipsis-vertical" slot="icon-only"></ion-icon>
+          </ion-button>
+          <ng-template #semAcoes>
+            <span class="proposal-actions-spacer" aria-hidden="true"></span>
+          </ng-template>
+        </div>
 
         <ion-popover [trigger]="'mais-opcoes-' + proposta.id" [dismissOnSelect]="true" *ngIf="proposta.status === 1">
           <ng-template>

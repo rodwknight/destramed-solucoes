@@ -7,3 +7,47 @@ ion-item {
   --color: var(--app-text);
   --border-color: var(--app-border);
 }
+.metadata-end-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.metadata-end-wrapper ion-chip {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.metadata-end-wrapper ion-note {
+  min-width: 5rem;
+  text-align: end;
+  white-space: nowrap;
+}
+
+.contract-actions,
+.contract-actions-spacer {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 2.5rem;
+}
+
+.contract-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contract-actions ion-button {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+ion-item {
+  --background: var(--app-surface);
+  --color: var(--app-text);
+  --border-color: var(--app-border);
+  margin-bottom: 12px;
+  border-radius: 12px;
+}
