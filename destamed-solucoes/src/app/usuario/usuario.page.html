@@ -18,9 +18,11 @@
     </ion-item>
   </ion-list>
 
-  <ion-item *ngIf="usuarios.length === 0">
-    <ion-label class="ion-text-center">Nenhum usuário encontrado!</ion-label>
-  </ion-item>
+  @if (usuarios.length === 0) {
+    <ion-item>
+      <ion-label class="ion-text-center">Nenhum usuário encontrado!</ion-label>
+    </ion-item>
+  }
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="primary" (click)="adicionarUsuario()">

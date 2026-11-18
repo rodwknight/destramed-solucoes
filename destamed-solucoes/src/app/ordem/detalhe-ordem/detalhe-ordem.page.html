@@ -50,10 +50,12 @@
           </ion-label>
           <ion-note slot="end">{{ item.valor | currency: 'BRL' }}</ion-note>
         </ion-item>
-        <ion-item *ngIf="ordem.deslocamento">
-          <ion-label>Deslocamento</ion-label>
-          <ion-note slot="end">{{ ordem.valorDeslocamento | currency: 'BRL' }}</ion-note>
-        </ion-item>
+        @if (ordem.deslocamento) {
+          <ion-item>
+            <ion-label>Deslocamento</ion-label>
+            <ion-note slot="end">{{ ordem.valorDeslocamento | currency: 'BRL' }}</ion-note>
+          </ion-item>
+        }
         <ion-item>
           <ion-label><strong>Total</strong></ion-label>
           <ion-note slot="end"><strong>{{ ordem.total ?? 0 | currency: 'BRL' }}</strong></ion-note>
@@ -62,13 +64,15 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-button expand="block" *ngIf="ordem.status === 1" (click)="iniciar()">Iniciar ordem</ion-button>
-  <ion-button expand="block" *ngIf="ordem.status === 2" (click)="finalizar()">Finalizar ordem</ion-button>
-  <ion-button
-    expand="block"
-    color="danger"
-    *ngIf="ordem.status === 1 || ordem.status === 2"
-    (click)="cancelar()">
-    Cancelar ordem
-  </ion-button>
+  @if (ordem.status === 1) {
+    <ion-button expand="block" (click)="iniciar()">Iniciar ordem</ion-button>
+  }
+  @if (ordem.status === 2) {
+    <ion-button expand="block" (click)="finalizar()">Finalizar ordem</ion-button>
+  }
+  @if (ordem.status === 1 || ordem.status === 2) {
+    <ion-button expand="block" color="danger" (click)="cancelar()">
+      Cancelar ordem
+    </ion-button>
+  }
 </ion-content>

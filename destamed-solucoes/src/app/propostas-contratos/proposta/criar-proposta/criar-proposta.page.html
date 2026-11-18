@@ -14,26 +14,28 @@
           </ion-select>
         </ion-item>
 
-        <ion-list *ngIf="unidadeSelecionada.codUnidade">
-          <ion-item>
-            <ion-label>
-              <h3>CNPJ</h3>
-              <p>{{ unidadeSelecionada.cnpj }}</p>
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>
-              <h3>Razão Social</h3>
-              <p>{{ unidadeSelecionada.razaoSocial }}</p>
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>
-              <h3>Nome Fantasia</h3>
-              <p>{{ unidadeSelecionada.nomeFantasia }}</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
+        @if (unidadeSelecionada.codUnidade) {
+          <ion-list>
+            <ion-item>
+              <ion-label>
+                <h3>CNPJ</h3>
+                <p>{{ unidadeSelecionada.cnpj }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h3>Razão Social</h3>
+                <p>{{ unidadeSelecionada.razaoSocial }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h3>Nome Fantasia</h3>
+                <p>{{ unidadeSelecionada.nomeFantasia }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        }
 
         <ion-item>
           <ion-label position="stacked">Cliente</ion-label>
@@ -44,26 +46,28 @@
           </ion-select>
         </ion-item>
 
-        <ion-list *ngIf="clienteSelecionado.codCliente">
-          <ion-item>
-            <ion-label>
-              <h3>CNPJ</h3>
-              <p>{{ clienteSelecionado.cnpj }}</p>
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>
-              <h3>Razão Social</h3>
-              <p>{{ clienteSelecionado.razaoSocial }}</p>
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>
-              <h3>Nome Fantasia</h3>
-              <p>{{ clienteSelecionado.nomeFantasia }}</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
+        @if (clienteSelecionado.codCliente) {
+          <ion-list>
+            <ion-item>
+              <ion-label>
+                <h3>CNPJ</h3>
+                <p>{{ clienteSelecionado.cnpj }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h3>Razão Social</h3>
+                <p>{{ clienteSelecionado.razaoSocial }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h3>Nome Fantasia</h3>
+                <p>{{ clienteSelecionado.nomeFantasia }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        }
 
         <ion-item>
           <ion-label position="stacked">Nº funcionários</ion-label>
@@ -109,7 +113,9 @@
         <ion-item>
           <ion-label>
             <h3>Total serviços: <span>{{ totalServicos | currency: 'BRL' }}</span></h3>
-            <h3 *ngIf="form.get('deslocamento')?.value">Deslocamento: <span>{{ form.get('valorDeslocamento')?.value || 'R$ 0,00' }}</span></h3>
+            @if (form.get('deslocamento')?.value) {
+              <h3>Deslocamento: <span>{{ form.get('valorDeslocamento')?.value || 'R$ 0,00' }}</span></h3>
+            }
             <h3>Total: <span>{{ total | currency: 'BRL' }}</span></h3>
           </ion-label>
         </ion-item>

@@ -12,15 +12,6 @@
       <ion-card-content>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <ion-item lines="none" class="input-item">
-            <ion-label position="stacked">Empresa</ion-label>
-            <ion-select formControlName="empresa" interface="popover" placeholder="Selecione a empresa">
-              <ion-select-option *ngFor="let empresa of empresas" [value]="empresa">
-                {{ empresa.nome }}
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
-
-          <ion-item lines="none" class="input-item">
             <ion-label position="stacked">Usuário</ion-label>
             <ion-input formControlName="username" placeholder="Digite seu usuário"></ion-input>
           </ion-item>
@@ -32,6 +23,18 @@
 
           <ion-button expand="block" type="submit" class="submit-button">Entrar</ion-button>
         </form>
+
+        @if (pwaInstallService.canInstall$ | async) {
+          <ion-button
+            expand="block"
+            fill="outline"
+            type="button"
+            class="install-button"
+            (click)="installPwa()">
+            <ion-icon slot="start" name="download-outline"></ion-icon>
+            Instalar aplicativo
+          </ion-button>
+        }
       </ion-card-content>
     </ion-card>
   </div>

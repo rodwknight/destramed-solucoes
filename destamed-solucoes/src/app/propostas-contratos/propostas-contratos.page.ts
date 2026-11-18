@@ -11,14 +11,12 @@ export class PropostasContratosPage {
   cards = [
     {
       title: 'Propostas',
-      value: '12',
       icon: 'create',
       route: '/propostas-contratos/proposta',
       color: 'secondary',
     },
     {
       title: 'Contratos',
-      value: '24',
       icon: 'briefcase',
       route: '/propostas-contratos/contrato',
       color: 'secondary',

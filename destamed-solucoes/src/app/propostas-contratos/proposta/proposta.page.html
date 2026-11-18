@@ -24,43 +24,47 @@
         <ion-note color="medium">{{ proposta.createdAt | date: 'dd/MM/yyyy' }}</ion-note>
 
         <div class="proposal-actions">
-          <ion-button
-            *ngIf="proposta.status === 1; else semAcoes"
-            shape="round"
-            fill="clear"
-            [id]="'mais-opcoes-' + proposta.id"
-            aria-label="Opções da proposta"
-          >
-            <ion-icon name="ellipsis-vertical" slot="icon-only"></ion-icon>
-          </ion-button>
-          <ng-template #semAcoes>
+          @if (proposta.status === 1) {
+            <ion-button
+              shape="round"
+              fill="clear"
+              [id]="'mais-opcoes-' + proposta.id"
+              aria-label="Opções da proposta"
+            >
+              <ion-icon name="ellipsis-vertical" slot="icon-only"></ion-icon>
+            </ion-button>
+          } @else {
             <span class="proposal-actions-spacer" aria-hidden="true"></span>
-          </ng-template>
+          }
         </div>
 
-        <ion-popover [trigger]="'mais-opcoes-' + proposta.id" [dismissOnSelect]="true" *ngIf="proposta.status === 1">
-          <ng-template>
-            <ion-content>
-              <ion-list lines="none">
-                <ion-item [button]="true" class="ion-padding-start" (click)="aprovar(proposta)">
-                  <ion-icon slot="start" name="checkmark"></ion-icon>
-                  <ion-text>Aprovar</ion-text>
-                </ion-item>
-                <ion-item [button]="true" class="ion-padding-start" (click)="reprovar(proposta)">
-                  <ion-icon slot="start" name="close"></ion-icon>
-                  <ion-text>Reprovar</ion-text>
-                </ion-item>
-              </ion-list>
-            </ion-content>
-          </ng-template>
-        </ion-popover>
+        @if (proposta.status === 1) {
+          <ion-popover [trigger]="'mais-opcoes-' + proposta.id" [dismissOnSelect]="true">
+            <ng-template>
+              <ion-content>
+                <ion-list lines="none">
+                  <ion-item [button]="true" class="ion-padding-start" (click)="aprovar(proposta)">
+                    <ion-icon slot="start" name="checkmark"></ion-icon>
+                    <ion-text>Aprovar</ion-text>
+                  </ion-item>
+                  <ion-item [button]="true" class="ion-padding-start" (click)="reprovar(proposta)">
+                    <ion-icon slot="start" name="close"></ion-icon>
+                    <ion-text>Reprovar</ion-text>
+                  </ion-item>
+                </ion-list>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
+        }
       </div>
     </ion-item>
   </ion-list>
 
-  <ion-item *ngIf="propostas.length === 0">
-    <ion-label class="ion-text-center">Nenhuma proposta encontrada!</ion-label>
-  </ion-item>
+  @if (propostas.length === 0) {
+    <ion-item>
+      <ion-label class="ion-text-center">Nenhuma proposta encontrada!</ion-label>
+    </ion-item>
+  }
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="criarProposta()">

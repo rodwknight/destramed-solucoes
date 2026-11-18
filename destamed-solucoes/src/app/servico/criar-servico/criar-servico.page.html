@@ -11,25 +11,31 @@
           <ion-label position="stacked">Nome</ion-label>
           <ion-input formControlName="nome" placeholder="Nome do serviço"></ion-input>
         </ion-item>
-        <ion-text color="danger" *ngIf="isFieldInvalid('nome')">
-          <small>Nome obrigatório.</small>
-        </ion-text>
+        @if (isFieldInvalid('nome')) {
+          <ion-text color="danger">
+            <small>Nome obrigatório.</small>
+          </ion-text>
+        }
 
         <ion-item>
           <ion-label position="stacked">Descrição</ion-label>
           <ion-textarea formControlName="descricao" rows="3" placeholder="Descrição do serviço"></ion-textarea>
         </ion-item>
-        <ion-text color="danger" *ngIf="isFieldInvalid('descricao')">
-          <small>Descrição obrigatória.</small>
-        </ion-text>
+        @if (isFieldInvalid('descricao')) {
+          <ion-text color="danger">
+            <small>Descrição obrigatória.</small>
+          </ion-text>
+        }
 
         <ion-item>
           <ion-label position="stacked">Descrição para proposta</ion-label>
           <ion-textarea formControlName="descricaoProposta" rows="3" placeholder="Texto para proposta"></ion-textarea>
         </ion-item>
-        <ion-text color="danger" *ngIf="isFieldInvalid('descricaoProposta')">
-          <small>Descrição para proposta obrigatória.</small>
-        </ion-text>
+        @if (isFieldInvalid('descricaoProposta')) {
+          <ion-text color="danger">
+            <small>Descrição para proposta obrigatória.</small>
+          </ion-text>
+        }
 
         <ion-item>
           <ion-label position="stacked">Valor</ion-label>
@@ -41,9 +47,13 @@
             (ionInput)="formatarValor($event)"
           ></ion-input>
         </ion-item>
-        <ion-text color="danger" *ngIf="isFieldInvalid('valor')">
-          <small *ngIf="servicoForm.controls.valor.errors?.['required']">Valor obrigatório.</small>
-        </ion-text>
+        @if (isFieldInvalid('valor')) {
+          <ion-text color="danger">
+            @if (servicoForm.controls.valor.errors?.['required']) {
+              <small>Valor obrigatório.</small>
+            }
+          </ion-text>
+        }
 
         <ion-grid>
           <ion-row>

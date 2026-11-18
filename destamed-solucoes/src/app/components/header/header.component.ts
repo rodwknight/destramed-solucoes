@@ -19,7 +19,6 @@ export class HeaderComponent {
   @Input() color: 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark' = 'secondary';
   @Input() showBackButton = true;
 
-  @Output() configClick = new EventEmitter<void>();
   @Output() logoutClick = new EventEmitter<void>();
 
   isAuthenticated(): boolean {
@@ -38,11 +37,6 @@ export class HeaderComponent {
 
     const parentPath = segments.length ? `/${segments.join('/')}` : '/home';
     void this.router.navigateByUrl(parentPath);
-  }
-
-  onConfigClick(): void {
-    this.configClick.emit();
-    this.router.navigate(['/configuracao']);
   }
 
   onLogoutClick(): void {

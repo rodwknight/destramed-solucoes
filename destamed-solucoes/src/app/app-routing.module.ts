@@ -43,10 +43,6 @@ const routes: Routes = [
     loadChildren: () => import('./cliente/cliente.module').then((m) => m.ClientePageModule),
   },
   {
-    path: 'configuracao',
-    loadChildren: () => import('./configuracao/configuracao.module').then((m) => m.ConfiguracaoPageModule),
-  },
-  {
     path: '**',
     redirectTo: 'login',
   },

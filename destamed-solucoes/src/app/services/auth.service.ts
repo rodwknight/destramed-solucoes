@@ -8,12 +8,12 @@ import { Observable, of } from 'rxjs';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  login(username: string, password: string, empresa: string): Observable<any> {
+  login(username: string, password: string): Observable<any> {
     const normalizedUser = (username || '').trim().toLowerCase();
     const normalizedPassword = (password || '').trim();
 
-    if (!normalizedUser || !normalizedPassword || !empresa) {
-      return of({ success: false, message: 'Informe usuário, senha e empresa.' });
+    if (!normalizedUser || !normalizedPassword) {
+      return of({ success: false, message: 'Informe usuário e senha.' });
     }
 
     if (normalizedUser === 'admin' && normalizedPassword === '123') {

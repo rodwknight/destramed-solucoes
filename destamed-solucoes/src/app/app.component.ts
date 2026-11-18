@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PwaInstallService } from './services/pwa-install.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,7 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class AppComponent {
-  constructor() {}
+  constructor(pwaInstallService: PwaInstallService) {
+    pwaInstallService.initialize();
+  }
 }

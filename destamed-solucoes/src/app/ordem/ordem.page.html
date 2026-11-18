@@ -16,9 +16,11 @@
     </ion-item>
   </ion-list>
 
-  <ion-item *ngIf="ordens.length === 0">
-    <ion-label class="ion-text-center">Nenhuma ordem encontrada.</ion-label>
-  </ion-item>
+  @if (ordens.length === 0) {
+    <ion-item>
+      <ion-label class="ion-text-center">Nenhuma ordem encontrada.</ion-label>
+    </ion-item>
+  }
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="adicionarOrdem()" aria-label="Criar ordem">

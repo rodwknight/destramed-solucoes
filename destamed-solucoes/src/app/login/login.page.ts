@@ -6,6 +6,7 @@ import { firstValueFrom } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
 import { LocalStorageService } from '../services/local-storage.service';
+import { PwaInstallService } from '../services/pwa-install.service';
 
 @Component({
   selector: 'app-login',
@@ -15,10 +16,6 @@ import { LocalStorageService } from '../services/local-storage.service';
 })
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
-  empresas = [
-    { id: 1, nome: 'Destamed Soluções' },
-    { id: 2, nome: 'Grupo Destamed' },
-  ];
 
   private localStorageService = new LocalStorageService();
 
@@ -27,11 +24,11 @@ export class LoginPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private toastController: ToastController,
+    public pwaInstallService: PwaInstallService,
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
-      empresa: ['', Validators.required],
     });
   }
 
@@ -44,7 +41,7 @@ export class LoginPage implements OnInit {
   async onSubmit(): Promise<void> {
     if (this.loginForm.invalid) {
       const toast = await this.toastController.create({
-        message: 'Preencha usuário, senha e empresa.',
+        message: 'Preencha usuário e senha.',
         duration: 2000,
         color: 'warning',
       });
@@ -52,9 +49,9 @@ export class LoginPage implements OnInit {
       return;
     }
 
-    const { username, password, empresa } = this.loginForm.value;
+    const { username, password } = this.loginForm.value;
 
-    const response = await firstValueFrom(this.authService.login(username, password, empresa?.nome || empresa));
+    const response = await firstValueFrom(this.authService.login(username, password));
 
     if (!response.success) {
       const toast = await this.toastController.create({
@@ -73,6 +70,25 @@ export class LoginPage implements OnInit {
     });
 
     this.router.navigate(['/home']);
+  }
+
+  async installPwa(): Promise<void> {
+    const result = await this.pwaInstallService.install();
+    const message =
+      result === 'ios-instructions'
+        ? 'Toque em Compartilhar e depois em Adicionar à Tela de Início para instalar o aplicativo.'
+        : result === 'unavailable'
+          ? 'A instalação não está disponível neste navegador ou o aplicativo já está instalado.'
+          : null;
+
+    if (message) {
+      const toast = await this.toastController.create({
+        message,
+        duration: 4000,
+        color: 'medium',
+      });
+      await toast.present();
+    }
   }
 
   isFieldInvalid(field: string): boolean {
