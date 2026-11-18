@@ -1,9 +1,7 @@
 <app-header
   title="Destamed Soluções"
   color="secondary"
-  [showBackButton]="false"
-  (configClick)="abrirConfiguracao()"
-  (logoutClick)="logout()">
+  [showBackButton]="false">
 </app-header>
 
 <ion-content class="ion-padding">
@@ -16,7 +14,6 @@
               <ion-icon [name]="card.icon" size="large"></ion-icon>
               <span>{{ card.title }}</span>
             </div>
-            <h3>{{ card.value }}</h3>
           </ion-card-content>
         </ion-card>
       </ion-col>

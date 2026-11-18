@@ -12,11 +12,10 @@ export class ServicoService {
 
   create(dados: FormServico): Observable<{ servicos: FormServico[]; success: boolean; message: string }> {
     const servicos = this.localStorage.getItem(this.storageKey) ?? this.buildDefaults();
-    const valor = Number(String(dados.valor).replace('.', '').replace(',', '.')) || 0;
     const nextItem: FormServico = {
       ...dados,
       codServico: dados.codServico ?? `SRV-${String(servicos.length + 1).padStart(3, '0')}`,
-      valor,
+      valor: this.parseValor(dados.valor),
       createdAt: new Date(),
     };
 
@@ -54,13 +53,27 @@ export class ServicoService {
       servicos[index] = {
         ...servicos[index],
         ...servico,
-        valor: Number(String(servico.valor).replace('.', '').replace(',', '.')) || 0,
+        valor: this.parseValor(servico.valor),
       };
       this.localStorage.setItem(this.storageKey, servicos);
       return of({ servicos, success: true, message: 'Serviço atualizado com sucesso.' });
     }
 
     return of({ servicos, success: false, message: 'Serviço não encontrado.' });
+  }
+
+  private parseValor(valor: string | number): number {
+    if (typeof valor === 'number') {
+      return Number.isFinite(valor) ? valor : 0;
+    }
+
+    const normalized = valor.trim().replace(/[^\d,.-]/g, '');
+    const decimalValue = normalized.includes(',')
+      ? normalized.replace(/\./g, '').replace(',', '.')
+      : normalized;
+    const parsed = Number(decimalValue);
+
+    return Number.isFinite(parsed) ? parsed : 0;
   }
 
   private buildDefaults(): FormServico[] {

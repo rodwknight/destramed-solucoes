@@ -1,0 +1,25 @@
+:host {
+  display: contents;
+}
+
+ion-menu {
+  --width: 300px;
+  --background: var(--app-surface);
+}
+
+ion-toolbar {
+  --color: #ffffff;
+}
+
+.menu-items {
+  padding-top: 12px;
+}
+
+ion-item {
+  --min-height: 52px;
+  font-weight: 600;
+}
+
+ion-footer {
+  border-top: 1px solid var(--app-border);
+}

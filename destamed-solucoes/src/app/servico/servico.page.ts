@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+import { firstValueFrom } from 'rxjs';
+
 import { FormServico } from '../interfaces';
+import { ServicoService } from '../services/servico.service';
 import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
@@ -9,74 +13,41 @@ import { LocalStorageService } from '../services/local-storage.service';
   styleUrls: ['./servico.page.scss'],
   standalone: false,
 })
-export class ServicoPage implements OnInit {
-  private localStorage = new LocalStorageService<FormServico[]>();
+export class ServicoPage {
+  private readonly router = inject(Router);
+  private readonly servicoService = inject(ServicoService);
+  private readonly loadingCtrl = inject(LoadingController);
+  private readonly localStorage = inject(LocalStorageService);
   servicos: FormServico[] = [];
 
-  constructor(private router: Router) {
+  constructor() {
     if (!this.localStorage.exists('accesskey')) {
-      this.router.navigate(['/login']);
+      void this.router.navigate(['/login']);
     }
   }
 
-  ngOnInit(): void {
-    this.loadServicos();
+  async ionViewWillEnter(): Promise<void> {
+    await this.buscaLista();
   }
 
   adicionarServico(): void {
     this.router.navigate(['/servico/criar-servico']);
   }
 
-  onSearchChange(searchValue: string | null | undefined): void {
-    const data = this.localStorage.getItem('servicos') ?? [];
-    const term = (searchValue ?? '').trim().toLowerCase();
-
-    if (!term) {
-      this.servicos = data as FormServico[];
-      return;
-    }
-
-    this.servicos = (data as FormServico[]).filter((servico) =>
-      servico.nome.toLowerCase().includes(term) || servico.descricao.toLowerCase().includes(term),
-    );
+  async onSearchChange(searchValue: string | null | undefined): Promise<void> {
+    const { servicos } = await firstValueFrom(this.servicoService.list(searchValue ?? undefined));
+    this.servicos = servicos;
   }
 
-  private loadServicos(): void {
-    const stored = this.localStorage.getItem('servicos') as FormServico[] | null;
+  private async buscaLista(): Promise<void> {
+    const loading = await this.loadingCtrl.create({ message: 'Buscando serviços...' });
+    await loading.present();
 
-    if (stored && stored.length) {
-      this.servicos = stored;
-      return;
+    try {
+      const { servicos } = await firstValueFrom(this.servicoService.list());
+      this.servicos = servicos;
+    } finally {
+      await loading.dismiss();
     }
-
-    const defaults: FormServico[] = [
-      {
-        codServico: 'SRV-001',
-        nome: 'Consultoria de segurança',
-        descricao: 'Assessoria técnica e diagnósticos de segurança.',
-        descricaoProposta: 'Diagnóstico completo de segurança da operação.',
-        valor: 2500,
-        createdAt: new Date(),
-      },
-      {
-        codServico: 'SRV-002',
-        nome: 'Monitoramento remoto',
-        descricao: 'Acompanhamento contínuo de indicadores e alertas.',
-        descricaoProposta: 'Monitoramento e suporte remoto por 30 dias.',
-        valor: 1800,
-        createdAt: new Date(),
-      },
-      {
-        codServico: 'SRV-003',
-        nome: 'Implementação de processos',
-        descricao: 'Padronização e implantação de rotinas operacionais.',
-        descricaoProposta: 'Implantação de processos e treinamento inicial.',
-        valor: 3200,
-        createdAt: new Date(),
-      },
-    ];
-
-    this.localStorage.setItem('servicos', defaults);
-    this.servicos = defaults;
   }
 }

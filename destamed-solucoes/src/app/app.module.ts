@@ -7,6 +7,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { MainMenuModule } from './components/main-menu/main-menu.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
@@ -15,6 +16,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    MainMenuModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),

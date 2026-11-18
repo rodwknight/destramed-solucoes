@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,10 @@ import { AuthService } from '../../services/auth.service';
   standalone: false,
 })
 export class HeaderComponent {
+  private readonly localStorage = inject(LocalStorageService);
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
+
   @Input() title = 'Destamed Soluções';
   @Input() color: 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark' = 'secondary';
   @Input() showBackButton = true;
@@ -17,18 +22,22 @@ export class HeaderComponent {
   @Output() configClick = new EventEmitter<void>();
   @Output() logoutClick = new EventEmitter<void>();
 
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-  ) {}
+  isAuthenticated(): boolean {
+    return this.localStorage.exists('accesskey');
+  }
 
   onBackClick(): void {
-    if (window.history.length > 1) {
-      window.history.back();
-      return;
+    const currentPath = this.router.url.split(/[?#]/, 1)[0].replace(/\/+$/, '');
+    const segments = currentPath.split('/').filter(Boolean);
+
+    if (segments.length >= 2 && segments[segments.length - 2].startsWith('detalhe-')) {
+      segments.splice(-2);
+    } else {
+      segments.pop();
     }
 
-    this.router.navigate(['/home']);
+    const parentPath = segments.length ? `/${segments.join('/')}` : '/home';
+    void this.router.navigateByUrl(parentPath);
   }
 
   onConfigClick(): void {

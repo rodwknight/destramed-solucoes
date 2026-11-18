@@ -13,31 +13,6 @@
         <ion-note color="medium">{{ ordem.usuario.nome }} · {{ ordem.createdAt | date: 'dd/MM/yyyy' }}</ion-note>
       </ion-label>
       <ion-badge slot="end" [color]="typeStatus(ordem.status)">{{ labelStatus(ordem.status) }}</ion-badge>
-      <ion-button
-        *ngIf="ordem.status === 1"
-        slot="end"
-        fill="clear"
-        aria-label="Iniciar ordem"
-        (click)="iniciar(ordem)">
-        <ion-icon name="play" slot="icon-only"></ion-icon>
-      </ion-button>
-      <ion-button
-        *ngIf="ordem.status === 2"
-        slot="end"
-        fill="clear"
-        aria-label="Finalizar ordem"
-        (click)="finalizar(ordem)">
-        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
-      </ion-button>
-      <ion-button
-        *ngIf="ordem.status === 1 || ordem.status === 2"
-        slot="end"
-        fill="clear"
-        color="danger"
-        aria-label="Cancelar ordem"
-        (click)="cancelar(ordem)">
-        <ion-icon name="close" slot="icon-only"></ion-icon>
-      </ion-button>
     </ion-item>
   </ion-list>
 

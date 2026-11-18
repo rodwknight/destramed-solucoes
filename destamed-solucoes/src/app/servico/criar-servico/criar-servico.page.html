@@ -1,33 +1,60 @@
-<app-header title="Novo serviço" color="secondary"></app-header>
-
+<app-header title="Criar Serviço" color="secondary"></app-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="servicoForm" (ngSubmit)="submit()">
+  <form [formGroup]="servicoForm" (ngSubmit)="onSubmit()">
     <ion-card>
+      <ion-card-header>
+        <ion-card-title>Serviço</ion-card-title>
+      </ion-card-header>
       <ion-card-content>
         <ion-item>
           <ion-label position="stacked">Nome</ion-label>
           <ion-input formControlName="nome" placeholder="Nome do serviço"></ion-input>
         </ion-item>
+        <ion-text color="danger" *ngIf="isFieldInvalid('nome')">
+          <small>Nome obrigatório.</small>
+        </ion-text>
 
         <ion-item>
           <ion-label position="stacked">Descrição</ion-label>
           <ion-textarea formControlName="descricao" rows="3" placeholder="Descrição do serviço"></ion-textarea>
         </ion-item>
+        <ion-text color="danger" *ngIf="isFieldInvalid('descricao')">
+          <small>Descrição obrigatória.</small>
+        </ion-text>
 
         <ion-item>
           <ion-label position="stacked">Descrição para proposta</ion-label>
           <ion-textarea formControlName="descricaoProposta" rows="3" placeholder="Texto para proposta"></ion-textarea>
         </ion-item>
+        <ion-text color="danger" *ngIf="isFieldInvalid('descricaoProposta')">
+          <small>Descrição para proposta obrigatória.</small>
+        </ion-text>
 
         <ion-item>
           <ion-label position="stacked">Valor</ion-label>
-          <ion-input formControlName="valor" type="number" placeholder="500"></ion-input>
+          <ion-input
+            formControlName="valor"
+            type="text"
+            inputmode="decimal"
+            placeholder="R$ 0,00"
+            (ionInput)="formatarValor($event)"
+          ></ion-input>
         </ion-item>
+        <ion-text color="danger" *ngIf="isFieldInvalid('valor')">
+          <small *ngIf="servicoForm.controls.valor.errors?.['required']">Valor obrigatório.</small>
+        </ion-text>
 
-        <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="servicoForm.invalid">
-          Salvar serviço
-        </ion-button>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-button expand="block" fill="outline" type="button" (click)="voltar()">Cancelar</ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button expand="block" type="submit">Criar Serviço</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-card-content>
     </ion-card>
   </form>

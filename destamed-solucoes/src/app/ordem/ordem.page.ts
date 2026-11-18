@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 
 import { listaStatusOrdem, StatusOrdem } from '../enums/status-ordem';
@@ -19,7 +19,6 @@ export class OrdemPage {
   private readonly router = inject(Router);
   private readonly ordemService = inject(OrdemService);
   private readonly loadingCtrl = inject(LoadingController);
-  private readonly toastCtrl = inject(ToastController);
   private readonly localStorage = inject(LocalStorageService);
 
   constructor() {
@@ -55,18 +54,6 @@ export class OrdemPage {
     this.ordens = ordens;
   }
 
-  iniciar(ordem: ListaOrdem): Promise<void> {
-    return this.updateStatus(ordem, StatusOrdem.INICIADO, 'Ordem iniciada com sucesso!');
-  }
-
-  finalizar(ordem: ListaOrdem): Promise<void> {
-    return this.updateStatus(ordem, StatusOrdem.FINALIZADO, 'Ordem finalizada com sucesso!');
-  }
-
-  cancelar(ordem: ListaOrdem): Promise<void> {
-    return this.updateStatus(ordem, StatusOrdem.CANCELADO, 'Ordem cancelada com sucesso!');
-  }
-
   private async buscaLista(): Promise<void> {
     const loading = await this.loadingCtrl.create({ message: 'Buscando ordens...' });
     await loading.present();
@@ -74,28 +61,6 @@ export class OrdemPage {
     try {
       const { ordens } = await firstValueFrom(this.ordemService.list());
       this.ordens = ordens;
-    } finally {
-      await loading.dismiss();
-    }
-  }
-
-  private async updateStatus(ordem: ListaOrdem, status: StatusOrdem, successMessage: string): Promise<void> {
-    const loading = await this.loadingCtrl.create({ message: 'Atualizando ordem...' });
-    await loading.present();
-
-    try {
-      const result = await firstValueFrom(this.ordemService.update(ordem, status));
-      if (result.success) {
-        this.ordens = result.ordens;
-      }
-
-      const toast = await this.toastCtrl.create({
-        message: result.success ? successMessage : result.message,
-        color: result.success ? 'success' : 'danger',
-        duration: 5000,
-        position: 'bottom',
-      });
-      await toast.present();
     } finally {
       await loading.dismiss();
     }
